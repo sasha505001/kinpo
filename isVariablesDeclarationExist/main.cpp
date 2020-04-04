@@ -3,6 +3,7 @@
 
 int main(int argc, char *argv[])
 {
+    try {
     // Часть необходимая для ввода
     QTextStream cin(stdin);
 
@@ -34,6 +35,8 @@ int main(int argc, char *argv[])
     // Решение задачи(создание списка с ответами объявлена ли переменная в программе на языке Си)
 
     // Запись результатов в файл
+    }  catch (const QString message) {
 
+    }
 
 }
