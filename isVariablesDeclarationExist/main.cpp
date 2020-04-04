@@ -1,7 +1,10 @@
 #include <QCoreApplication>
+#include <QTextStream>
 
 int main(int argc, char *argv[])
 {
+    // Часть необходимая для ввода
+    QTextStream cin(stdin);
 
     // Путь к файлу с кодом
     QString pathToCodeFile;
@@ -18,7 +21,14 @@ int main(int argc, char *argv[])
         // путь к файлу с именами переменных
         pathToVariablesFile = argv[2];
     }
-
+    else{
+        // запрос на ввод пути к файлу с кодом
+        printf("Enter the path to the code file:\n");
+        cin >> pathToCodeFile;
+        // запрос на ввод пути к файлу с переменными
+        printf("Enter the path to the variable file:\n");
+        cin >> pathToVariablesFile;
+    }
     // чтение файлов и их проверка
 
     // Решение задачи(создание списка с ответами объявлена ли переменная в программе на языке Си)
