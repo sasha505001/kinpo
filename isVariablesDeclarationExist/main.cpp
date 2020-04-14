@@ -1,8 +1,4 @@
-#include <QCoreApplication>
-#include <QTextStream>
-
-void getAndCheckImputDataFromFiles(QString &pathToCodeFile, QString &pathToVariablesFile,
-                          QStringList &textOfProgramm, QStringList &namesOfVariables);
+#include "headers.h"
 
 int main(int argc, char *argv[])
 {
