@@ -11,7 +11,21 @@
 */
 void getAndCheckImputDataFromFiles(QString &pathToCodeFile, QString &pathToVariablesFile,
                           QStringList &textOfProgramm, QStringList &namesOfVariables){
+
     // Проверка расширения обоих конечных файлов указанных в пути
+    // Проверка пути к файлу с кодом
+    int lastPoint = pathToCodeFile.lastIndexOf('.');
+    // Файл с кодом может иметь расшерения ".cpp" и ".txt"
+    if(!(pathToCodeFile.mid(lastPoint) == ".txt")){
+        throw QString("Error: File with code in the wrong format\n");
+    }
+
+    // Проверка пути к файлу с переменными
+    lastPoint = pathToVariablesFile.lastIndexOf('.');
+    // Файл с именами переменных может иметь тип расшерения ".txt"
+    if(!(pathToVariablesFile.mid(lastPoint) == ".txt")){
+        throw QString("Error: File with variables in the wrong format\n");
+    }
 
     // Чтение из файлов
 

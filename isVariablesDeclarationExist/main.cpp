@@ -2,6 +2,7 @@
 
 int main(int argc, char *argv[])
 {
+    QCoreApplication a(argc, argv);
     try {
     // Часть необходимая для ввода
     QTextStream cin(stdin);
@@ -37,6 +38,6 @@ int main(int argc, char *argv[])
     }  catch (const QString message) {
 
     }
-
+    return a.exec();
 }
 
