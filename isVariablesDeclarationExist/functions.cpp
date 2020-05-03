@@ -28,9 +28,40 @@ void getAndCheckImputDataFromFiles(QString &pathToCodeFile, QString &pathToVaria
     }
 
     // Чтение из файлов
+    // Чтение текста программы из кода
+    readFile(pathToCodeFile, textOfProgramm);
+    // Чтение файла с именами переменных для которых нужно опеределить объявлены ли они в коде
+    readFile(pathToVariablesFile, namesOfVariables);
 
     // Удаление пустых строчек в коде программы
+    textOfProgramm.removeAll("");
 
     // Проверка имен переменных
 }
+
+bool readFile(const QString &path, QStringList &text){
+    // Если путь к файлу не пустой
+    if(!path.isEmpty()){
+        QFile file(path);
+        // Если файл успешно открылся в режиме чтения
+        if(file.open(QIODevice::ReadOnly)){
+            QTextStream in(&file);
+            // Считываем файл строка за строкой
+            for(int i = 0; !in.atEnd(); i++){
+                QString line = in.readLine();
+                text.append(line);
+            }
+            return true;
+        }
+        else {
+            throw QString("Error: File doesn't exist");
+            return false;
+        }
+    }
+    else{
+        throw QString("Error: Path to file is empty");
+        return false;
+    }
+}
+
 

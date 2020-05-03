@@ -14,8 +14,14 @@
 #include <conio.h>
 #include <QDate>
 
+//============================PROTOTIPS=================================
+
+/// Чтение данных
+
+/// Чтение данных из файлов и проверка данных из файла переменных
 void getAndCheckImputDataFromFiles(QString &pathToCodeFile, QString &pathToVariablesFile,
                           QStringList &textOfProgramm, QStringList &namesOfVariables);
-
+/// чтение текста из файла
+bool readFile(const QString &path, QStringList &text);
 
 #endif // HEADERS_H
