@@ -37,6 +37,7 @@ void getAndCheckImputDataFromFiles(QString &pathToCodeFile, QString &pathToVaria
     textOfProgramm.removeAll("");
 
     // Проверка имен переменных
+
 }
 
 bool readFile(const QString &path, QStringList &text){
