@@ -24,4 +24,8 @@ void getAndCheckImputDataFromFiles(QString &pathToCodeFile, QString &pathToVaria
 /// чтение текста из файла
 bool readFile(const QString &path, QStringList &text);
 
+/// Проверка входных данных, прочитанных из файла с переменными(чтобы имена переменных
+/// не совпадали с ключенвыми словами и чтобы они могли являться переменными)
+bool checkingEnterVariables(const QStringList variablesList);
+
 #endif // HEADERS_H
