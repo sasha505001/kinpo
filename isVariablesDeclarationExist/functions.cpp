@@ -73,11 +73,24 @@ bool readFile(const QString &path, QStringList &text){
     \throw Совпадение одного из имен перменных с ключевым словом
 */
 bool checkingEnterVariables(const QStringList variablesList){
+    // Проверка не пустой ли файл был получен
+    if(variablesList.count() == 0){
+        throw QString("Error: The variable file is empty");
+        return false;
+    }
     // Проверка на совпадение файла с ключевыми словами
 
     // Для каждого имени переменной
-
+    for(int i = 0; i < variablesList.count(); i++){
         // Может текущая строка являться именем переменной
-
+        QRegExp regForVariable("\\s*[a-z|A-Z|_]\\w*\\s*", Qt::CaseSensitive, QRegExp::RegExp2);
+        if(!regForVariable.exactMatch(variablesList[i])){
+            throw QString("Error: One of the variable names cannot exist");
+            return false;
+        }
         // Если имя переменной является ключевым словом
+
+
+    }
+    return true;
 }
