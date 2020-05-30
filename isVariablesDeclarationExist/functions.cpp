@@ -40,6 +40,14 @@ void getAndCheckImputDataFromFiles(QString &pathToCodeFile, QString &pathToVaria
 
 }
 
+/**
+    \brief Функция для чтения из файла
+    \param[in] path - полный путь к файлу
+    \param[out] text - спиок который будет хранить все содержимое файла
+    \return было ли чтение проведено успешно
+    \throw Файд не существует
+    \throw Путь к файлу пустой
+*/
 bool readFile(const QString &path, QStringList &text){
     // Если путь к файлу не пустой
     if(!path.isEmpty()){
@@ -80,6 +88,12 @@ bool checkingEnterVariables(const QStringList variablesList){
     }
     // Проверка на совпадение файла с ключевыми словами
 
+    // Список ключевых слов в Си
+    QStringList keywords{"auto", "break", "case", "char", "const", "continue", "default", "do", "double", "else",
+                      "enum", "extern", "float", "for", "goto", "if", "inline", "switch", "long", "register",
+                      "return", "short", "signed", "sizeof", "static", "struct", "switch", "typedef",
+                      "union", "unsigned", "void", "volatile", "while"};
+
     // Для каждого имени переменной
     for(int i = 0; i < variablesList.count(); i++){
         // Может текущая строка являться именем переменной
@@ -89,8 +103,10 @@ bool checkingEnterVariables(const QStringList variablesList){
             return false;
         }
         // Если имя переменной является ключевым словом
-
-
+        if(keywords.contains(variablesList[i])){
+            throw QString("Error: One of the variable names matches the keyword");
+            return false;
+        }
     }
     return true;
 }
