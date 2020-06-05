@@ -37,7 +37,7 @@ void getAndCheckImputDataFromFiles(QString &pathToCodeFile, QString &pathToVaria
     textOfProgramm.removeAll("");
 
     // Проверка имен переменных
-
+    checkingEnterVariables(namesOfVariables);
 }
 
 /**

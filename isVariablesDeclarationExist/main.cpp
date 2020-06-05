@@ -30,7 +30,15 @@ int main(int argc, char *argv[])
         printf("Enter the path to the variable file:\n");
         cin >> pathToVariablesFile;
     }
+
+    // Текст программы
+    QStringList textOfProgramm;
+
+    // Список переменных
+    QStringList namesOfVariables;
+
     // чтение файлов и их проверка
+    getAndCheckImputDataFromFiles(pathToCodeFile, pathToVariablesFile, textOfProgramm, namesOfVariables);
 
     // Решение задачи(создание списка с ответами объявлена ли переменная в программе на языке Си)
 
