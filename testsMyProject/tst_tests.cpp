@@ -18,6 +18,10 @@ private slots:
     // тесты для checkingEnterVariables
     void test_checkingEnterVariables();
     void test_checkingEnterVariables_data();
+
+    // тесты для getAndCheckImputDataFromFiles
+    void test_getAndCheckImputDataFromFiles();
+    void test_getAndCheckImputDataFromFiles_data();
 };
 
 tests::tests()
@@ -124,6 +128,96 @@ void tests::test_checkingEnterVariables_data(){
             << QString("Error: One of the variable names cannot exist")
             << false;
 }
+
+
+// тесты getAndCheckImputDataFromFiles
+void tests::test_getAndCheckImputDataFromFiles(){
+    // Входные данные
+    QFETCH(QString, pathToCodeText);
+    QFETCH(QString, pathToVariablesList);
+    QFETCH(QString, pathToResultCodeText);
+    QFETCH(QString, pathToResultVariablesList);
+    QFETCH(QString, expectedErrorMessage);
+
+    QStringList codeText;
+    QStringList variablesList;
+    QStringList expectedCodeText;
+    QStringList expectedVariablesList;
+    QString errorMessage = QString("");
+
+    readFile(pathToResultCodeText, expectedCodeText);
+    readFile(pathToResultVariablesList, expectedVariablesList);
+
+
+    // Выполнение функции
+    try {
+        getAndCheckImputDataFromFiles(pathToCodeText, pathToVariablesList, codeText, variablesList);
+    }  catch (QString message) {
+        errorMessage = message;
+    }
+
+    // Проверка результатов
+    QCOMPARE(codeText == expectedCodeText, true);
+    QCOMPARE(variablesList == expectedVariablesList, true);
+    QCOMPARE(errorMessage, expectedErrorMessage);
+}
+
+void tests::test_getAndCheckImputDataFromFiles_data(){
+    // путь к вспомогательным файлам
+    QString pathToHelpsFile = PRO_FILE_PWD;
+    pathToHelpsFile.append("/files/getAndCheckImputDataFromFiles/");
+    // столбцы ...
+    // путь к файлу с тектом проргаммы
+    QTest::addColumn<QString>("pathToCodeText");
+    // путь к файлу со списком имен переменных
+    QTest::addColumn<QString>("pathToVariablesList");
+    // путь к файлу с тектом программы, который получиться в результате выполнения функции
+    QTest::addColumn<QString>("pathToResultCodeText");
+    // список имен переменных , который получиться в результате выполнения функции
+    QTest::addColumn<QString>("pathToResultVariablesList");
+    // Сообщение об ошибке, которое может возникнуть в результате выполнения функции
+    QTest::addColumn<QString>("expectedErrorMessage");
+
+    // Тест 1 : на вход подается путь к тексту на языке Си и путь к именам
+    // переменных, формат файла правильный, имена переменных допустимы
+    QTest::newRow("1.Simple test")
+            << QString(pathToHelpsFile).append("test_1/text.txt")
+            << QString(pathToHelpsFile).append("test_1/varList.txt")
+            << QString(pathToHelpsFile).append("test_1/resultText.txt")
+            << QString(pathToHelpsFile).append("/test_1/resultVarList.txt")
+            << QString("");
+
+    // Тест 2 : на вход был подан файл отличный от .txt(файл с кодом)
+    QTest::newRow("2.Wrong format CodeFile")
+            << QString(pathToHelpsFile).append("test_2/text.exe")
+            << QString(pathToHelpsFile).append("test_2/varList.txt")
+            << QString(pathToHelpsFile).append("test_2/resultText.txt")
+            << QString(pathToHelpsFile).append("test_2/resultVarList.txt")
+            << QString("Error: File with code in the wrong format\n");
+    // Тест 3 : на вход был подан файл отличный от .txt(файл со списком имен переменных)
+    QTest::newRow("3.Wrong format variablesList")
+            << QString(pathToHelpsFile).append("test_3/text.txt")
+            << QString(pathToHelpsFile).append("test_3/varList.cpp")
+            << QString(pathToHelpsFile).append("test_3/resultText.txt")
+            << QString(pathToHelpsFile).append("test_3/resultVarList.txt")
+            << QString("Error: File with variables in the wrong format\n");
+    // Тест 4 : на вход был подан путь к файлу который не существует
+    QTest::newRow("4.One of files doesn't exist")
+            << QString(pathToHelpsFile).append("test_4/text1.txt")
+            << QString(pathToHelpsFile).append("test_4/varList.txt")
+            << QString(pathToHelpsFile).append("test_4/resultText.txt")
+            << QString(pathToHelpsFile).append("test_4/resultVarList.txt")
+            << QString("Error: File doesn't exist");
+    // Тест 5 : на вход был подан файл с именами переменными, который содержит
+    // имя идентичное ключевому слову
+    QTest::newRow("5.One name of variables is keyword")
+            << QString(pathToHelpsFile).append("test_5/text.txt")
+            << QString(pathToHelpsFile).append("test_5/varList.txt")
+            << QString(pathToHelpsFile).append("test_5/resultText.txt")
+            << QString(pathToHelpsFile).append("test_5/resultVarList.txt")
+            << QString("Error: One of the variable names matches the keyword");
+}
+
 
 
 
