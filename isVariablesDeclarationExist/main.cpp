@@ -41,6 +41,7 @@ int main(int argc, char *argv[])
     getAndCheckImputDataFromFiles(pathToCodeFile, pathToVariablesFile, textOfProgramm, namesOfVariables);
 
     // Решение задачи(создание списка с ответами объявлена ли переменная в программе на языке Си)
+    QStringList answerList = createListWithAnswers(textOfProgramm, namesOfVariables);
 
     // Запись результатов в файл
     }  catch (const QString message) {

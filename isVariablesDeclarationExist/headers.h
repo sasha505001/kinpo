@@ -28,4 +28,9 @@ bool readFile(const QString &path, QStringList &text);
 /// не совпадали с ключенвыми словами и чтобы они могли являться переменными)
 bool checkingEnterVariables(const QStringList variablesList);
 
+/// Решение поставленной задачи
+/// Создание списка с ответом для каждой переменной, объявлена ли она в коде программы на языке Си
+QStringList createListWithAnswers(QStringList sourceCode, QStringList namesOfVariables);
+
+
 #endif // HEADERS_H
