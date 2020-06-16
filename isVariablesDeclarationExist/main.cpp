@@ -44,6 +44,7 @@ int main(int argc, char *argv[])
     QStringList answerList = createListWithAnswers(textOfProgramm, namesOfVariables);
 
     // Запись результатов в файл
+
     }  catch (const QString message) {
 
     }

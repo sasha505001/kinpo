@@ -32,5 +32,8 @@ bool checkingEnterVariables(const QStringList variablesList);
 /// Создание списка с ответом для каждой переменной, объявлена ли она в коде программы на языке Си
 QStringList createListWithAnswers(QStringList sourceCode, QStringList namesOfVariables);
 
+/// Удаление всех комментариев и всех строковых констант из кода на языке Си
+void deleteAllCommentsAndStringConstnts(QStringList &sourceCode);
+
 
 #endif // HEADERS_H
