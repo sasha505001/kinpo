@@ -132,19 +132,36 @@ QStringList createListWithAnswers(QStringList sourceCode, QStringList namesOfVar
 */
 void deleteAllCommentsAndStringConstnts(QStringList &sourceCode){
 
+    // Текущая строка
+    int curStr = 0;
+    // Последний символ в строке на котором остановилась функция проверки
+    int curPosInStr = 0;
+
+    int textCountStr = sourceCode.count();  // Кол-во строк в тексте програмы
+
     // Пока не дошел до конца текста программы
-
+    while (curStr < textCountStr) {
+        // Длина текущей строки(с нулевым символом)
+        int curStrLength = sourceCode[curStr].length();
         // Пока не дошел до предпоследнего символа строки
-
+        while (curPosInStr < curStrLength - 1) {
             // Если была встречена последовательность символов начинающиая однострочный комментарий
-
+            if( sourceCode[curStr][curPosInStr] == '/' &&
+                    sourceCode[curStr][curPosInStr + 1] == '/'){
+                // Удаляю все, все что было после первого символа начала однострочного комментария
+                sourceCode[curStr].remove(curPosInStr, curStrLength - curPosInStr);
+                curStrLength = sourceCode[curStr].length();
+            }
             // Если была встречена последовательность символов начинающая многострочный комментарий
 
             // Если был встречен символ начинающий последовательность строковой константы
 
             // Иду дальше по строке
-
+            curPosInStr++;
+        }
         // Перехожу к след. строке
-
-
+        curStr++;
+        curPosInStr = 0;
+    }
+    sourceCode.removeAll("");
 }
