@@ -152,7 +152,41 @@ void deleteAllCommentsAndStringConstnts(QStringList &sourceCode){
                 sourceCode[curStr].remove(curPosInStr, curStrLength - curPosInStr);
                 curStrLength = sourceCode[curStr].length();
             }
+
             // Если была встречена последовательность символов начинающая многострочный комментарий
+            if( sourceCode[curStr][curPosInStr] == '/' &&
+                    sourceCode[curStr][curPosInStr + 1] == '*'){
+                // Тогда ищу последовательность символов закрывающих многострочный комментарий
+                int closeMultiCommentsSimvols = sourceCode[curStr].indexOf("*/", curPosInStr + 2);
+                // Если последовательность не найдена на текущей строке
+                if(closeMultiCommentsSimvols == -1){
+                    //тогда я очищаю все что было на текущей строке с последовательности символов начинающих
+                    // многострочных комментарий и до конца текущей строки
+                    sourceCode[curStr].remove(curPosInStr, curStrLength - curPosInStr);
+                    // ищу символ на следующей строке
+                    curStr++;
+                    curPosInStr = 0;
+                    closeMultiCommentsSimvols = sourceCode[curStr].indexOf("*/");
+
+                    // Пока закрывающая последовательность не найдена и пока текущая строка не стала последней
+                    while (closeMultiCommentsSimvols == -1 && curStr < textCountStr) {
+                        // Удаляю строку прошлую строку, в которой не была найдена последовательность
+                        // символов закрывающий многострочный комментарий
+                        sourceCode.erase(sourceCode.begin() + curStr);
+                        textCountStr--;
+                        // Ищу последовательность на след. строчке
+                        closeMultiCommentsSimvols = sourceCode[curStr].indexOf("*/");
+                    }
+                    // Как была найдена последовательность, удаляю все что было до этой последовательности
+                    sourceCode[curStr].remove(0, closeMultiCommentsSimvols + 2);
+                }
+                else{
+                    // Удаляю  последовательность с начала многострочного комментария и до его конца
+                    sourceCode[curStr].remove(curPosInStr, closeMultiCommentsSimvols + 2 - curPosInStr);
+                }
+                curStrLength = sourceCode[curStr].length();
+                textCountStr = sourceCode.count();
+            }
 
             // Если был встречен символ начинающий последовательность строковой константы
 
