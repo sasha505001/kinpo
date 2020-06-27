@@ -189,6 +189,23 @@ void deleteAllCommentsAndStringConstnts(QStringList &sourceCode){
             }
 
             // Если был встречен символ начинающий последовательность строковой константы
+            if(sourceCode[curStr][curPosInStr] == '\'' || sourceCode[curStr][curPosInStr] == '\"'){
+                int endOfConst = curPosInStr + 1;
+                // пока не дойду до концап строки или конца строковой константы
+                while (endOfConst < curStrLength && (sourceCode[curStr][endOfConst] != '\''
+                                                     && sourceCode[curStr][endOfConst] != '\"')) {
+                    // Если был встречен символ экранирования
+                    if(sourceCode[curStr][endOfConst] == '\\'){
+                        // перехожу к следующему символу
+                        endOfConst++;
+                    }
+                    // перехожу к следующему символу
+                    endOfConst++;
+                }
+                // Удаляю последовательность с начала строковой константы и до её конца
+                sourceCode[curStr].remove(curPosInStr, endOfConst - curPosInStr + 1);
+                curStrLength = sourceCode[curStr].length();
+            }
 
             // Иду дальше по строке
             curPosInStr++;
