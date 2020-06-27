@@ -22,6 +22,10 @@ private slots:
     // тесты для getAndCheckImputDataFromFiles
     void test_getAndCheckImputDataFromFiles();
     void test_getAndCheckImputDataFromFiles_data();
+
+    // тесты для deleteAllCommentsAndStringConstnts
+    void test_deleteAllCommentsAndStringConstnts();
+    void test_deleteAllCommentsAndStringConstnts_data();
 };
 
 tests::tests()
@@ -216,6 +220,111 @@ void tests::test_getAndCheckImputDataFromFiles_data(){
             << QString(pathToHelpsFile).append("test_5/resultText.txt")
             << QString(pathToHelpsFile).append("test_5/resultVarList.txt")
             << QString("Error: One of the variable names matches the keyword");
+}
+
+
+// тесты deleteAllCommentsAndStringConstnts
+void tests::test_deleteAllCommentsAndStringConstnts(){
+    // Входные данные
+    QFETCH(QString, pathToCodeText);
+    QFETCH(QString, pathToResultCodeText);
+
+    QStringList textOfProgramm;
+    QStringList resultText;
+
+    readFile(pathToCodeText, textOfProgramm);
+    readFile(pathToResultCodeText, resultText);
+
+    // Выполнение функции
+    deleteAllCommentsAndStringConstnts(textOfProgramm);
+
+    // Проверка результатов
+    QCOMPARE(textOfProgramm == resultText, true);
+}
+
+void tests::test_deleteAllCommentsAndStringConstnts_data(){
+    // путь к вспомогательным файлам
+    QString pathToHelpsFile = PRO_FILE_PWD;
+    pathToHelpsFile.append("/files/deleteAllCommentsAndStringConstnts/");
+
+    // столбцы ...
+    // путь к тексту программы на языке Си
+    QTest::addColumn<QString>("pathToCodeText");
+    // путь к тесту программы на языке Си без комментариев и строковых констант
+    QTest::addColumn<QString>("pathToResultCodeText");
+
+    // Тесты
+    // Тест 1 : тест программы не содержит комментариев и строковых констант
+    QTest::newRow("1.Program text doesn't have comment and string consts")
+            << QString(pathToHelpsFile).append("test_1/text.txt")
+            << QString(pathToHelpsFile).append("test_1/result.txt");
+    // Тест 2 :  код содержит только однострочные комментарии
+    // (комментарий в начале строки)
+    QTest::newRow("2.Program text have oneline comment in the start of str")
+            << QString(pathToHelpsFile).append("test_2/text.txt")
+            << QString(pathToHelpsFile).append("test_2/result.txt");
+
+    // Тест 3 : код содержит только однострочные комментарии
+    // (комментарий в конце строки)
+    QTest::newRow("3.Program text have oneline comment in the end of str")
+            << QString(pathToHelpsFile).append("test_3/text.txt")
+            << QString(pathToHelpsFile).append("test_3/result.txt");
+
+    // Тест 4 : код содержит только многострочные коментарии
+    //(комментарий начиается в начале строки и заканчивается на той же строке)
+    QTest::newRow("4.Program text have multiline comment start and end in one str")
+            << QString(pathToHelpsFile).append("test_4/text.txt")
+            << QString(pathToHelpsFile).append("test_4/result.txt");
+
+    // Тест 5 : код содержит только многострочные коментарии
+    //(комментарий начиается в начале строки и конец на другой строке )
+    QTest::newRow("5.Program text have multiline comment start in one str and end in another ")
+            << QString(pathToHelpsFile).append("test_5/text.txt")
+            << QString(pathToHelpsFile).append("test_5/result.txt");
+
+    // Тест 6 : код содержит только многострочные коментарии
+    //(комментарий начиается в середине строки и конец на той же строке чуть дальше середины )
+    QTest::newRow("6.Program text have multiline comment start and end in the middel of str")
+            << QString(pathToHelpsFile).append("test_6/text.txt")
+            << QString(pathToHelpsFile).append("test_6/result.txt");
+
+    // Тест 7 : код содержит только многострочные коментарии
+    //(комментарий начиается в конце строки и конец на другой строке )
+    QTest::newRow("7.Program text have multiline comment start in the end of str and end of comment in other str")
+            << QString(pathToHelpsFile).append("test_7/text.txt")
+            << QString(pathToHelpsFile).append("test_7/result.txt");
+
+    // Тест 8 : код содержит строковую константу
+    // (начало строковой константы находится в начале строки)
+    QTest::newRow("8.Text have str const in the start of the str ")
+            << QString(pathToHelpsFile).append("test_8/text.txt")
+            << QString(pathToHelpsFile).append("test_8/result.txt");
+
+    // Тест 9 :код содержит строковую константу
+    // (начало строковой константы находится в середине строки)
+    QTest::newRow("9.Text have str const in the middle of the str ")
+            << QString(pathToHelpsFile).append("test_9/text.txt")
+            << QString(pathToHelpsFile).append("test_9/result.txt");
+
+    // Тест 10 : код содержит строковую константу
+    // (внутри строковой константы находится завершающая эту константу
+    // escape последовательность)
+    QTest::newRow("10.Text have str const and this const str have /\" ")
+            << QString(pathToHelpsFile).append("test_10/text.txt")
+            << QString(pathToHelpsFile).append("test_10/result.txt");
+
+    // Тест 11 : код содержит строковую константу
+    // (внутри строковой константы находится последовательность похожая
+    // на начало однострочного комментария)
+    QTest::newRow("11.Text have str const and this const str have // ")
+            << QString(pathToHelpsFile).append("test_11/text.txt")
+            << QString(pathToHelpsFile).append("test_11/result.txt");
+
+    // Тест 12 : код содержит как комментарии так и строковые константы
+    QTest::newRow("12.Text have const str and comments")
+            << QString(pathToHelpsFile).append("test_12/text.txt")
+            << QString(pathToHelpsFile).append("test_12/result.txt");
+
 }
 
 

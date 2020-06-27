@@ -1,0 +1,11 @@
+int sum(int a, int b);
+
+int main(int argc, char *argv[]){// it is main   \('_')\
+int a = 1;
+int b = 2;
+int c = sum(a, b);
+}
+
+int sum(int a, int b){// it is sum \('_')\
+	return a+b;
+}

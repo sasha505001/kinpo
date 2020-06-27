@@ -1,0 +1,10 @@
+int sum(int a, int b);
+
+int main(int argc, char *argv[]){
+int a = 1;/* it's comment*/ int b = 2;
+int c = sum(a, b);
+}
+
+int sum(int a,/*it's anothercomment /('_')/*/ int b){
+	return a+b;
+}

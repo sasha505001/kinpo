@@ -1,0 +1,16 @@
+int sum(int a, int b);
+// hello world
+int main(int argc, char *argv[]){
+int a = 1;
+int b = 2;
+/*
+	Goodbue cruel world!
+*/
+
+'\''
+// int c = sum(a, b);
+char abc[20] = "a//b/*c";}
+"abcde"'a'
+int sum(int a, int b){
+	return a+b;
+}
