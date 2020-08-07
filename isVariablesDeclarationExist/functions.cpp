@@ -120,6 +120,13 @@ bool checkingEnterVariables(const QStringList variablesList){
 QStringList createListWithAnswers(QStringList sourceCode, QStringList namesOfVariables){
     // Удаление всех комментариев и строчных констант из текста программы
     deleteAllCommentsAndStringConstnts(sourceCode);
+
+    // Преобразование всего кода программы в строку
+    QString allCode;
+    for(int i = 0; i < sourceCode.count(); i++){
+        allCode.append(sourceCode[i]).append(' ');
+    }
+
     // Создание списка всех переменных объявленных в коде программы на языке Си
 
     // Создание списка переменных с ответами на вопрос, объявлены ли эти переменные в коде проргаммы
