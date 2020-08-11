@@ -128,7 +128,9 @@ QStringList createListWithAnswers(QStringList sourceCode, QStringList namesOfVar
     }
 
     // Создание списка всех переменных объявленных в коде программы на языке Си
-
+    // Создание списка всех переменных объявленных в коде программы на языке Си
+    QStringList progVariablesList;
+    createVariblesList(allCode, progVariablesList);
     // Создание списка переменных с ответами на вопрос, объявлены ли эти переменные в коде проргаммы
 
 }
@@ -223,5 +225,21 @@ void deleteAllCommentsAndStringConstnts(QStringList &sourceCode){
         curPosInStr = 0;
     }
     sourceCode.removeAll("");
+}
+
+/**
+    \brief Создание списка имен всех перменных объявленных в тексте программы на языка Си
+    \param[in] sourceCode - код программы на языке Си
+    \param[out] creatingList - список имен переменных
+*/
+void createVariblesList(QString sourceCode, QStringList &creatingList){
+    // Исходные типы данных(в соответствии с ТЗ)
+
+    // Дополняю текущие типы данных, пользовательскими
+
+    // для каждого типа данных
+        // Регулярное выражение, которое захватывает все объявление переменных для текущего типа  данных
+        // в коде программы(кроме множественных объявлений)
+    // Удаляю копии из списка имен переменных
 }
 

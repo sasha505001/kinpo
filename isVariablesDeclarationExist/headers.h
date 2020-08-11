@@ -35,5 +35,7 @@ QStringList createListWithAnswers(QStringList sourceCode, QStringList namesOfVar
 /// Удаление всех комментариев и всех строковых констант из кода на языке Си
 void deleteAllCommentsAndStringConstnts(QStringList &sourceCode);
 
+/// Создать список имен переменных объявленных переменных
+void createVariblesList(QString sourceCode, QStringList &creatingList);
 
 #endif // HEADERS_H
