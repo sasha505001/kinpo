@@ -234,8 +234,10 @@ void deleteAllCommentsAndStringConstnts(QStringList &sourceCode){
 */
 void createVariblesList(QString sourceCode, QStringList &creatingList){
     // Исходные типы данных(в соответствии с ТЗ)
+    QStringList dataTypes{"char", "int", "float", "double"};
 
     // Дополняю текущие типы данных, пользовательскими
+    createTypesList(sourceCode, dataTypes);
 
     // для каждого типа данных
         // Регулярное выражение, которое захватывает все объявление переменных для текущего типа  данных
@@ -243,3 +245,28 @@ void createVariblesList(QString sourceCode, QStringList &creatingList){
     // Удаляю копии из списка имен переменных
 }
 
+
+/**
+    \brief Создание списка всех пользовательских типов переменных
+    \param[in] sourceCode - текст программы на языке Си
+    \param[in,out] creatingList - создаваемый список всех пользовательских типов переменых
+*/
+void createTypesList(QString sourceCode, QStringList &creatingList){
+    // Ругулярное выражение для обнаружения пользовательских типов
+    QRegExp myReg("\\b(?:struct|union|enum)\\s+([a-z|A-Z|_]\\w*)", Qt::CaseSensitive, QRegExp::RegExp2);
+
+    // Первое нахождение совпадения c определением пользовательского типа
+    int lastFind = myReg.indexIn(sourceCode, 0);
+
+    // Пока существуют определения пользовательского типа в строке кода
+    while ( lastFind != -1) {
+        // Запоминаю захваченные регулярным выражением строки
+        QStringList lastStrFind = myReg.capturedTexts();
+        // Иду дальше по строке
+        lastFind += myReg.matchedLength();
+        // Добавляю в список имен типов захваченные регулярным выражением строки
+        creatingList.append(lastStrFind[1]);
+        // Ищу совпадения с регулярным выражением
+        lastFind = myReg.indexIn(sourceCode, lastFind);
+    }
+}

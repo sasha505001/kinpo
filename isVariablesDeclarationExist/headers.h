@@ -38,4 +38,6 @@ void deleteAllCommentsAndStringConstnts(QStringList &sourceCode);
 /// Создать список имен переменных объявленных переменных
 void createVariblesList(QString sourceCode, QStringList &creatingList);
 
+/// Дополнить существующий список имен типов, оглашенных в ТЗ, пользовательскими типами
+void createTypesList(QString sourceCode, QStringList &creatingList);
 #endif // HEADERS_H
