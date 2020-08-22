@@ -26,6 +26,12 @@ private slots:
     // тесты для deleteAllCommentsAndStringConstnts
     void test_deleteAllCommentsAndStringConstnts();
     void test_deleteAllCommentsAndStringConstnts_data();
+
+    // тесты для createTypesList
+    void test_createTypesList();
+    void test_createTypesList_data();
+
+
 };
 
 tests::tests()
@@ -327,6 +333,75 @@ void tests::test_deleteAllCommentsAndStringConstnts_data(){
 
 }
 
+
+// тесты для createTypesList
+void tests::test_createTypesList(){
+    // Входные данные
+    QFETCH(QString, pathToTextOfProgramm);
+    QFETCH(QString, pathToResult);
+
+    QStringList textOfProgramm;
+    QStringList resultList;
+    readFile(pathToTextOfProgramm, textOfProgramm);
+    readFile(pathToResult, resultList);
+    QStringList actualList;
+    // преобразование всего кода в строку
+    // Преобразование всего кода программы в строку
+    QString allCode;
+    for(int i = 0; i < textOfProgramm.count(); i++){
+        allCode.append(textOfProgramm[i]).append(' ');
+    }
+    // Выполнение программы
+    createTypesList(allCode, actualList);
+
+    // Сравнение результатов
+    QCOMPARE(compareContentOfList(actualList, resultList) ,true);
+}
+
+void tests::test_createTypesList_data(){
+    // путь к вспомогательным файлам
+    QString pathToHelpsFile = PRO_FILE_PWD;
+    pathToHelpsFile.append("/files/createTypesList/");
+
+    // входные результаты
+    QTest::addColumn<QString>("pathToTextOfProgramm");
+    QTest::addColumn<QString>("pathToResult");
+    // тесты
+
+    // Тест 1 : тест программы не содержит не одного объявления пользовательского типа
+    QTest::newRow("1.Text without custom types")
+            << QString(pathToHelpsFile).append("test_1/text.txt")
+            << QString(pathToHelpsFile).append("test_1/result.txt");
+
+    // Тест 2 : текст программы содержит структуры
+    //(2 структуры: в 1 структура разбита на строки, 2 записана в строку)
+    QTest::newRow("2.Text has structs")
+            << QString(pathToHelpsFile).append("test_2/text.txt")
+            << QString(pathToHelpsFile).append("test_2/result.txt");
+
+    // Тест 3 : текст программы содержит только объединения
+    //(2 объединения: в 1 объединение разбита на строки, 2 записана в строку)
+    QTest::newRow("3.Text has union")
+            << QString(pathToHelpsFile).append("test_3/text.txt")
+            << QString(pathToHelpsFile).append("test_3/result.txt");
+
+    // Тест 4 : текст программы содержит только перечисления
+    //(2 перечисления: в 1 перечисление разбито на строки, 2 записана в строку)
+    QTest::newRow("4.Text has enum")
+            << QString(pathToHelpsFile).append("test_4/text.txt")
+            << QString(pathToHelpsFile).append("test_4/result.txt");
+
+    // Тест 5 : текст программы содержит структуры, объединения, перечисления
+    QTest::newRow("5.Text has custom types")
+            << QString(pathToHelpsFile).append("test_5/text.txt")
+            << QString(pathToHelpsFile).append("test_5/result.txt");
+
+    // Тест 6: текст программы содержит структуры, объединения, перечисления
+    // ключевое слово(struct, union, enum) находит на отдельной строке
+    QTest::newRow("6.Text has custom types parts of str in different terms")
+            << QString(pathToHelpsFile).append("test_6/text.txt")
+            << QString(pathToHelpsFile).append("test_6/result.txt");
+}
 
 
 

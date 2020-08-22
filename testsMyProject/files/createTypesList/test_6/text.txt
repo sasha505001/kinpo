@@ -1,0 +1,27 @@
+int sum(int a, int b);
+struct 
+ abc
+{
+int a
+}
+;
+union
+ a
+{char b}
+;
+enum 
+colors
+{
+red,
+blue
+}
+union ab{char b};
+int main(int argc, char *argv[]){
+int a = 1;
+int b = 2;
+int c = sum(a, b);
+}
+struct adbc{int a};
+int sum(int a, int b){
+	return a+b;
+}
