@@ -227,6 +227,7 @@ void deleteAllCommentsAndStringConstnts(QStringList &sourceCode){
     sourceCode.removeAll("");
 }
 
+
 /**
     \brief Создание списка имен всех перменных объявленных в тексте программы на языка Си
     \param[in] sourceCode - код программы на языке Си
@@ -238,6 +239,11 @@ void createVariblesList(QString sourceCode, QStringList &creatingList){
 
     // Дополняю текущие типы данных, пользовательскими
     createTypesList(sourceCode, dataTypes);
+
+    // Деление строчки из кода на действия
+    QRegExp splitReg("[\\{|\\;|\\}]", Qt::CaseSensitive, QRegExp::RegExp2);
+    // Разделитель - "{", ";", "}"
+    QStringList codeList = sourceCode.split(splitReg);
 
     QRegExp myReg("",Qt::CaseSensitive, QRegExp::RegExp2);
     // для каждого типа данных
@@ -251,6 +257,33 @@ void createVariblesList(QString sourceCode, QStringList &creatingList){
             lastFind += myReg.matchedLength();
             creatingList.append(lastStrFind[1]);
             lastFind = myReg.indexIn(sourceCode, lastFind);
+        }
+
+        // Решение для множественного объявления
+        // для каждой разделенной строчки
+        for(int j = 0; j < codeList.count(); j++){
+            // ищу объявление переменной с типом
+            int lastFind = myReg.indexIn(codeList[j], 0);
+            // ищу первую открытую скобку в строке
+            int lastPosOpenBracket = codeList[j].indexOf('(');
+
+            // если было найдено объявление с типом
+            //если скобка была найдена и она находиться после найденного объявления
+            // или скобка не была найдена вообще
+            if((lastFind != -1) &&
+                    (((lastPosOpenBracket != -1) &&
+                      (lastFind < lastPosOpenBracket)) || (lastPosOpenBracket == -1))){
+                // тогда разделяю строку по запятым
+                QStringList sepString = codeList[j].split(",");
+                QRegExp variableName("[\\*|\\(|\\s]*([a-z|A-Z|_]\\w*)[\\s|\\)]*", Qt::CaseSensitive, QRegExp::RegExp2);
+                // для каждой разделенной строчки
+                for(int k = 1; k < sepString.count(); k++){
+                    // ищу совпадение с регулярным выражением
+                    variableName.indexIn(sepString[k]);
+                    QStringList ValNameFind = variableName.capturedTexts();
+                    creatingList.append(ValNameFind[1]);
+                }
+            }
         }
     }
     // Удаляю копии из списка имен переменных
