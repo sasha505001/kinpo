@@ -239,10 +239,22 @@ void createVariblesList(QString sourceCode, QStringList &creatingList){
     // Дополняю текущие типы данных, пользовательскими
     createTypesList(sourceCode, dataTypes);
 
+    QRegExp myReg("",Qt::CaseSensitive, QRegExp::RegExp2);
     // для каждого типа данных
+    for(int i = 0; i < dataTypes.count(); i++){
         // Регулярное выражение, которое захватывает все объявление переменных для текущего типа  данных
         // в коде программы(кроме множественных объявлений)
+        myReg.setPattern(QString("\\b").append(dataTypes[i]).append("[\\s|\\*|\\(]+([a-z|A-Z|_]\\w*)[\\s|\\)]*[\\;|\\,|\\[|\\=|\\{]"));
+        int lastFind = myReg.indexIn(sourceCode, 0);
+        while (lastFind != -1) {
+            QStringList lastStrFind = myReg.capturedTexts();
+            lastFind += myReg.matchedLength();
+            creatingList.append(lastStrFind[1]);
+            lastFind = myReg.indexIn(sourceCode, lastFind);
+        }
+    }
     // Удаляю копии из списка имен переменных
+    creatingList.removeDuplicates();
 }
 
 
