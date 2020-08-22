@@ -2,6 +2,19 @@
 #include "../isVariablesDeclarationExist/functions.cpp"
 // add necessary includes here
 
+// Сравнение не по порядку а по содержимому списка
+bool compareContentOfList(QStringList &obj1, QStringList &obj2){
+    if(!(obj1.count() == obj2.count()))
+        return false;
+
+    for(int i = 0; i < obj1.count(); i++){
+        if(!(obj2.contains(obj1[i]))){
+            return false;
+        }
+    }
+    return true;
+}
+
 class tests : public QObject
 {
     Q_OBJECT
@@ -30,6 +43,11 @@ private slots:
     // тесты для createTypesList
     void test_createTypesList();
     void test_createTypesList_data();
+
+    // тесты для createVariblesList
+    void test_createVariblesList();
+    void test_createVariblesList_data();
+
 
 
 };
@@ -402,6 +420,92 @@ void tests::test_createTypesList_data(){
             << QString(pathToHelpsFile).append("test_6/text.txt")
             << QString(pathToHelpsFile).append("test_6/result.txt");
 }
+
+
+// тесты для createVariblesList
+void tests::test_createVariblesList(){
+    // Входные данные
+    QFETCH(QString, pathToTextOfProgramm);
+    QFETCH(QString, pathToResult);
+
+    QStringList textOfProgramm;
+    QStringList resultList;
+    readFile(pathToTextOfProgramm, textOfProgramm);
+    readFile(pathToResult, resultList);
+    QStringList actualList;
+
+    // преобразование всего кода в строку
+    // Преобразование всего кода программы в строку
+    QString allCode;
+    for(int i = 0; i < textOfProgramm.count(); i++){
+        allCode.append(textOfProgramm[i]).append(' ');
+    }
+
+    // Выполнение программы
+    createVariblesList(allCode, actualList);
+
+    // Сравнение результатов
+
+    QCOMPARE(compareContentOfList(actualList, resultList) ,true);
+}
+
+void tests::test_createVariblesList_data(){
+    // путь к вспомогательным файлам
+    QString pathToHelpsFile = PRO_FILE_PWD;
+    pathToHelpsFile.append("/files/createVariblesList/");
+
+    // входные результаты
+    QTest::addColumn<QString>("pathToTextOfProgramm");
+    QTest::addColumn<QString>("pathToResult");
+
+    // тесты
+
+    // Тест 1 : простой тест без пользовательских типов
+    QTest::newRow("1. Simple test")
+            << QString(pathToHelpsFile).append("test_1/text.txt")
+            << QString(pathToHelpsFile).append("test_1/result.txt");
+
+
+    // Тест 2 : в тесте программы находятся множестевенные объявления
+    QTest::newRow("2. Text has multiple variable declaration")
+            << QString(pathToHelpsFile).append("test_2/text.txt")
+            << QString(pathToHelpsFile).append("test_2/result.txt");
+
+    // Тест 3 :  объявления переменных разбиты по разным строкам
+    //(тип на одной, имя на другой, значение на другой)
+    QTest::newRow("3. Declarations are divided into different terms")
+            << QString(pathToHelpsFile).append("test_3/text.txt")
+            << QString(pathToHelpsFile).append("test_3/result.txt");
+
+
+    // Тест 4 : объявление находится в протипе / заголовке функции
+    QTest::newRow("4. Declarations is into header/prototype of function")
+            << QString(pathToHelpsFile).append("test_4/text.txt")
+            << QString(pathToHelpsFile).append("test_4/result.txt");
+
+    // Тест 5 : объявление находится вне функции
+    QTest::newRow("5. Declarations is are outside of function")
+            << QString(pathToHelpsFile).append("test_5/text.txt")
+            << QString(pathToHelpsFile).append("test_5/result.txt");
+
+    // Тест 6 : имя переменной совпадает с именем пользователского типа
+    QTest::newRow("6. Name of variable is matches the name of the custom type")
+            << QString(pathToHelpsFile).append("test_6/text.txt")
+            << QString(pathToHelpsFile).append("test_6/result.txt");
+
+    // Тест 7 : в тексте программы есть множественные объявления
+    //(Частичная инициализация, инициализация всех перменных, без инициализации)
+    QTest::newRow("7. Multiple variables declarations with initialization and without")
+            << QString(pathToHelpsFile).append("test_7/text.txt")
+            << QString(pathToHelpsFile).append("test_7/result.txt");
+
+    // Тест 8 : объявляется массив и объявляется указатель
+    QTest::newRow("8. Declare of pointer and array")
+            << QString(pathToHelpsFile).append("test_7/text.txt")
+            << QString(pathToHelpsFile).append("test_7/result.txt");
+}
+
+
 
 
 

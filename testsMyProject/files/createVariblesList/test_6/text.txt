@@ -1,0 +1,17 @@
+int sum(int e, int b);
+
+int abc;
+
+struct haha{
+}
+
+int main(int argc, char *argv[]){
+int a = 1;
+int b = 2;
+int c = sum(a, b);
+int haha;
+}
+
+int sum(int e, int b){
+	return e+b;
+}

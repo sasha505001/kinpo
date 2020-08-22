@@ -1,0 +1,13 @@
+int sum(int a, int b);
+
+int main(int argc, char *argv[]){
+int a = 1;
+int b = 2;
+int d[12];
+char *e;
+int c = sum(a, b);
+}
+
+int sum(int a, int b){
+	return a+b;
+}
