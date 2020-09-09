@@ -291,6 +291,7 @@ void createVariblesList(QString sourceCode, QStringList &creatingList){
 }
 
 
+
 /**
     \brief Создание списка всех пользовательских типов переменных
     \param[in] sourceCode - текст программы на языке Си
