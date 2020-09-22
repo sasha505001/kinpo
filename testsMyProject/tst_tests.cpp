@@ -48,6 +48,10 @@ private slots:
     void test_createVariblesList();
     void test_createVariblesList_data();
 
+    // тесты для createListWithAnswers
+    void test_createListWithAnswers();
+    void test_createListWithAnswers_data();
+
 
 
 };
@@ -503,6 +507,58 @@ void tests::test_createVariblesList_data(){
     QTest::newRow("8. Declare of pointer and array")
             << QString(pathToHelpsFile).append("test_7/text.txt")
             << QString(pathToHelpsFile).append("test_7/result.txt");
+}
+
+
+// тесты для createListWithAnswers
+void tests::test_createListWithAnswers(){
+    // Входные данные
+    QFETCH(QString, pathToCode);
+    QFETCH(QString, pathToVarList);
+    QFETCH(QString, pathToExpectedRes);
+    QStringList textOfProgramm;
+    QStringList varList;
+    QStringList expectedRes;
+    readFile(pathToCode, textOfProgramm);
+    readFile(pathToVarList, varList);
+    readFile(pathToExpectedRes, expectedRes);
+
+    // Выполнение функции
+    QStringList actualRes = createListWithAnswers(textOfProgramm, varList);
+
+    // Сравнение результатов
+    QCOMPARE(compareContentOfList(actualRes, expectedRes), true);
+}
+
+void tests::test_createListWithAnswers_data(){
+    // путь к вспомогательным файлам
+    QString pathToHelpsFile = PRO_FILE_PWD;
+    pathToHelpsFile.append("/files/createListWithAnswers/");
+
+    QTest::addColumn<QString>("pathToCode");
+    QTest::addColumn<QString>("pathToVarList");
+    QTest::addColumn<QString>("pathToExpectedRes");
+
+    // тесты
+
+    // Тест 1 : проверяемое имя было объявлено в закомментированной части кода
+    QTest::newRow("1. The variable was declared in the commented part of code")
+            << QString(pathToHelpsFile).append("test_1/text.txt")
+            << QString(pathToHelpsFile).append("test_1/var.txt")
+            << QString(pathToHelpsFile).append("test_1/result.txt");
+
+    // Тест 2 : проверяемое имя было объявлено в строковой константе
+    QTest::newRow("2. The variable was declared in the string const")
+            << QString(pathToHelpsFile).append("test_2/text.txt")
+            << QString(pathToHelpsFile).append("test_2/var.txt")
+            << QString(pathToHelpsFile).append("test_2/result.txt");
+
+    // Тест 3 :  проверяемое имя переменной не было объявлено,
+    // но в программе есть одноименные пользовательские тип
+    QTest::newRow("3. The variable wasn't declared but there is the same name of custom data type")
+            << QString(pathToHelpsFile).append("test_2/text.txt")
+            << QString(pathToHelpsFile).append("test_2/var.txt")
+            << QString(pathToHelpsFile).append("test_2/result.txt");
 }
 
 
