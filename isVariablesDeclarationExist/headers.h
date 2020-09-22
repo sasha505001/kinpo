@@ -40,4 +40,11 @@ void createVariblesList(QString sourceCode, QStringList &creatingList);
 
 /// Дополнить существующий список имен типов, оглашенных в ТЗ, пользовательскими типами
 void createTypesList(QString sourceCode, QStringList &creatingList);
+
+/// Найти совпадения из созданного списка имен переменных и име переменных для которых
+/// нужно определить, объявлены ли они в коде
+void writeAnswerInList(QStringList &variablesList, QStringList const &createdList);
+
+
+
 #endif // HEADERS_H

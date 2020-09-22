@@ -131,8 +131,12 @@ QStringList createListWithAnswers(QStringList sourceCode, QStringList namesOfVar
     // Создание списка всех переменных объявленных в коде программы на языке Си
     QStringList progVariablesList;
     createVariblesList(allCode, progVariablesList);
-    // Создание списка переменных с ответами на вопрос, объявлены ли эти переменные в коде проргаммы
 
+    // Создание списка переменных с ответами на вопрос, объявлены ли эти переменные в коде проргаммы
+    QStringList answerList = namesOfVariables;
+    writeAnswerInList(answerList, progVariablesList);
+
+    return answerList;
 }
 
 /**
@@ -314,5 +318,26 @@ void createTypesList(QString sourceCode, QStringList &creatingList){
         creatingList.append(lastStrFind[1]);
         // Ищу совпадения с регулярным выражением
         lastFind = myReg.indexIn(sourceCode, lastFind);
+    }
+}
+
+
+/**
+    \brief Функция для записи результата функции в список variablesList
+    \param[in,out] variablesList - список имен переменных, для которых нужно проверить объявлены ли они в коде программы на языке Си
+    \param[in] createdList - список имен переменных, найденных в коде программы на языке Си
+*/
+void writeAnswerInList(QStringList &variablesList, QStringList const &createdList){
+    // Для каждого имени переменной которое нужно проверить
+    for(int i = 0; i < variablesList.count(); i++){
+        // Если строчка из имен переменных есть в списке имен переменных найденных в коде
+        if(createdList.contains(variablesList[i])){
+            // То фиксирую что эта переменная объявлена в этом коде
+            variablesList[i].append(" - true");
+        }
+        else{
+            // То фиксирую что эта переменная не объявлена в этом коде
+            variablesList[i].append(" - false");
+        }
     }
 }
