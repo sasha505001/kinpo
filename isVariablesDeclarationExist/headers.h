@@ -45,6 +45,12 @@ void createTypesList(QString sourceCode, QStringList &creatingList);
 /// нужно определить, объявлены ли они в коде
 void writeAnswerInList(QStringList &variablesList, QStringList const &createdList);
 
+/// Вывод результата
+
+/// запись текста в файл
+bool writeFile(const QString &path, QStringList &text);
+
+
 
 
 #endif // HEADERS_H

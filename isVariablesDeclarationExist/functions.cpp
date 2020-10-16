@@ -341,3 +341,36 @@ void writeAnswerInList(QStringList &variablesList, QStringList const &createdLis
         }
     }
 }
+
+
+/**
+    \brief Функция записи списка в файл
+    \param[in] path - путь, где именно должен создаваться файл
+    \param[in] text - список, который будет записан в файл
+    \return была ли запись проведена успешно
+    \throw Файл невозможно создать
+    \throw Путь к файлу пустой
+*/
+bool writeFile(const QString &path, QStringList &text){
+    // Если путь к файлу не пустой
+    if(!path.isEmpty()){
+        QFile file(path);
+        // Если файл был успешно открыт в режиме записи
+        if(file.open(QIODevice::WriteOnly)){
+            QTextStream out(&file);
+            // записываю содержимое листа в файл
+            for(int i = 0; i < text.count(); i++){
+                out << text[i] << Qt::endl;
+            }
+            return true;
+        }
+        else {
+            throw QString("Error: File doesn't exist");
+            return false;
+        }
+    }
+    else {
+        throw QString("Error: Path to file is empty");
+        return false;
+    }
+}
