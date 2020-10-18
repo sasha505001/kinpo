@@ -53,7 +53,9 @@ private slots:
     void test_createListWithAnswers_data();
 
 
-
+    // тесты для writeFile
+    void test_writeFile();
+    void test_writeFile_data();
 };
 
 tests::tests()
@@ -560,6 +562,63 @@ void tests::test_createListWithAnswers_data(){
             << QString(pathToHelpsFile).append("test_2/var.txt")
             << QString(pathToHelpsFile).append("test_2/result.txt");
 }
+
+
+// тесты для writeFile
+void tests::test_writeFile(){
+
+    QFETCH(QString, pathToWrite);
+    QFETCH(QString, pathToList);
+    QFETCH(QString, pathToExpectedRes);
+
+
+    QStringList listToWrite;
+    QStringList expectedRes;
+
+    readFile(pathToList, listToWrite);
+    readFile(pathToExpectedRes, expectedRes);
+
+    QStringList actual;
+
+    try {
+        writeFile(pathToWrite, listToWrite);
+        readFile(pathToWrite, actual);
+    }  catch (QString message) {
+        actual.append(message);
+    }
+
+    QCOMPARE(actual == expectedRes, true);
+}
+
+void tests::test_writeFile_data(){
+    // путь к вспомогательным файлам
+    QString pathToHelpsFile = PRO_FILE_PWD;
+    pathToHelpsFile.append("/files/writeFile/");
+
+    QTest::addColumn<QString>("pathToWrite");
+    QTest::addColumn<QString>("pathToList");
+    QTest::addColumn<QString>("pathToExpectedRes");
+
+    // Тест 1 : запись информации в файл
+    QTest::newRow("1. Simple test")
+            << QString(pathToHelpsFile).append("test_1/actual.txt")
+            << QString(pathToHelpsFile).append("test_1/text.txt")
+            << QString(pathToHelpsFile).append("test_1/result.txt");
+
+    // Тест 2 : путь где должен храниться файл был подан пустой путь
+    QTest::newRow("2. Path is empty")
+            << QString("")
+            << QString(pathToHelpsFile).append("test_2/text.txt")
+            << QString(pathToHelpsFile).append("test_2/result.txt");
+
+
+    // Тест 3 : производится запись пустого файла
+    QTest::newRow("3. File is empty")
+            << QString(pathToHelpsFile).append("test_3/actual.txt")
+            << QString(pathToHelpsFile).append("test_3/text.txt")
+            << QString(pathToHelpsFile).append("test_3/result.txt");
+}
+
 
 
 
