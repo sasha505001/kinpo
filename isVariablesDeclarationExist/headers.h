@@ -47,6 +47,9 @@ void writeAnswerInList(QStringList &variablesList, QStringList const &createdLis
 
 /// Вывод результата
 
+/// Запись результатов в файл
+void writeResultsInFile(QStringList &list);
+
 /// запись текста в файл
 bool writeFile(const QString &path, QStringList &text);
 

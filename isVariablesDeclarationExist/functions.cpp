@@ -342,6 +342,24 @@ void writeAnswerInList(QStringList &variablesList, QStringList const &createdLis
     }
 }
 
+/**
+    \brief Запись результатов в файл(путь определен)
+    \param[in] list - что нужно записать в файл
+*/
+void writeResultsInFile(QStringList &list){
+    // Создаю папку Results в корневой директроии
+    QDir dir;
+    dir.mkdir("Results");
+    // Составляю путь для файла
+    // Довожу путь до директории где будет храниться файл
+    QString resultPath = QDir::currentPath().append("\\Results\\");
+    // Добавляю имя файла и расширение
+    resultPath.append("Result").append(".txt");
+    // Запись результата в файл
+    writeFile(resultPath, list);
+}
+
+
 
 /**
     \brief Функция записи списка в файл
