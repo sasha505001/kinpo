@@ -44,9 +44,16 @@ int main(int argc, char *argv[])
     QStringList answerList = createListWithAnswers(textOfProgramm, namesOfVariables);
 
     // Запись результатов в файл
+    writeResultsInFile(answerList);
+    printf("Solution was created. Answer is located in folder \"Results\".");
 
     }  catch (const QString message) {
+        QStringList answerList{message};
 
+        // Запись ошибки в файл
+        writeResultsInFile(answerList);
+
+        printf("ERROR! Error message is located in folder \"Results\".");
     }
     return a.exec();
 }

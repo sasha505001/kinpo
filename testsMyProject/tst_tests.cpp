@@ -52,6 +52,9 @@ private slots:
     void test_createListWithAnswers();
     void test_createListWithAnswers_data();
 
+    // тесты для writeAnswerInList
+    void test_writeAnswerInList();
+    void test_writeAnswerInList_data();
 
     // тесты для writeFile
     void test_writeFile();
@@ -562,6 +565,48 @@ void tests::test_createListWithAnswers_data(){
             << QString(pathToHelpsFile).append("test_2/var.txt")
             << QString(pathToHelpsFile).append("test_2/result.txt");
 }
+
+
+
+// тесты для writeAnswerInList
+void tests::test_writeAnswerInList(){
+    // Входные данные
+
+    QFETCH(QString, pathToChangeList);
+    QFETCH(QString, pathToVarList);
+    QFETCH(QString, pathToExpectedRes);
+    QStringList changeList;
+    QStringList varList;
+    QStringList expectedRes;
+    readFile(pathToChangeList, changeList);
+    readFile(pathToVarList, varList);
+    readFile(pathToExpectedRes, expectedRes);
+
+    // Выполнение функции
+    writeAnswerInList(changeList, varList);
+
+    // Проверка результатов
+    QCOMPARE(changeList == expectedRes, true);
+
+
+}
+
+void tests::test_writeAnswerInList_data(){
+    // путь к вспомогательным файлам
+    QString pathToHelpsFile = PRO_FILE_PWD;
+    pathToHelpsFile.append("/files/writeAnswerInList/");
+
+    QTest::addColumn<QString>("pathToChangeList");
+    QTest::addColumn<QString>("pathToVarList");
+    QTest::addColumn<QString>("pathToExpectedRes");
+
+    // Тест 1 :
+    QTest::newRow("1. Simple test")
+            << QString(pathToHelpsFile).append("test_1/list.txt")
+            << QString(pathToHelpsFile).append("test_1/var.txt")
+            << QString(pathToHelpsFile).append("test_1/result.txt");
+}
+
 
 
 // тесты для writeFile
