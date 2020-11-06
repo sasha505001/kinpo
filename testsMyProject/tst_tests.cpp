@@ -1,5 +1,6 @@
 #include <QtTest>
 #include "../isVariablesDeclarationExist/functions.cpp"
+
 // add necessary includes here
 
 // Сравнение не по порядку а по содержимому списка
@@ -71,7 +72,6 @@ tests::~tests()
 
 }
 
-
 // тесты readFile
 void tests::test_readFile(){
     QStringList actual;
@@ -111,7 +111,6 @@ void tests::test_readFile_data(){
             << QString(pathToHelpsFile).append("test_3.txt")
             << QStringList{"Error: File doesn't exist"};
 }
-
 
 // тесты checkingEnterVariables
 void tests::test_checkingEnterVariables(){
@@ -165,7 +164,6 @@ void tests::test_checkingEnterVariables_data(){
             << QString("Error: One of the variable names cannot exist")
             << false;
 }
-
 
 // тесты getAndCheckImputDataFromFiles
 void tests::test_getAndCheckImputDataFromFiles(){
@@ -254,7 +252,6 @@ void tests::test_getAndCheckImputDataFromFiles_data(){
             << QString(pathToHelpsFile).append("test_5/resultVarList.txt")
             << QString("Error: One of the variable names matches the keyword");
 }
-
 
 // тесты deleteAllCommentsAndStringConstnts
 void tests::test_deleteAllCommentsAndStringConstnts(){
@@ -360,7 +357,6 @@ void tests::test_deleteAllCommentsAndStringConstnts_data(){
 
 }
 
-
 // тесты для createTypesList
 void tests::test_createTypesList(){
     // Входные данные
@@ -429,7 +425,6 @@ void tests::test_createTypesList_data(){
             << QString(pathToHelpsFile).append("test_6/text.txt")
             << QString(pathToHelpsFile).append("test_6/result.txt");
 }
-
 
 // тесты для createVariblesList
 void tests::test_createVariblesList(){
@@ -514,7 +509,6 @@ void tests::test_createVariblesList_data(){
             << QString(pathToHelpsFile).append("test_7/result.txt");
 }
 
-
 // тесты для createListWithAnswers
 void tests::test_createListWithAnswers(){
     // Входные данные
@@ -566,8 +560,6 @@ void tests::test_createListWithAnswers_data(){
             << QString(pathToHelpsFile).append("test_2/result.txt");
 }
 
-
-
 // тесты для writeAnswerInList
 void tests::test_writeAnswerInList(){
     // Входные данные
@@ -606,8 +598,6 @@ void tests::test_writeAnswerInList_data(){
             << QString(pathToHelpsFile).append("test_1/var.txt")
             << QString(pathToHelpsFile).append("test_1/result.txt");
 }
-
-
 
 // тесты для writeFile
 void tests::test_writeFile(){
@@ -663,10 +653,6 @@ void tests::test_writeFile_data(){
             << QString(pathToHelpsFile).append("test_3/text.txt")
             << QString(pathToHelpsFile).append("test_3/result.txt");
 }
-
-
-
-
 
 
 QTEST_APPLESS_MAIN(tests)

@@ -1,4 +1,10 @@
+/**
+\file
+\brief Данный файл содержит все функции, которые использователись в проекте
+*/
 #include "headers.h"
+
+//===================================FUNCTIONS=================================
 
 /**
     \brief Чтение данных из командной строки, их проверка, чтение из файлов и проверка данных из файла переменных
@@ -39,6 +45,7 @@ void getAndCheckImputDataFromFiles(QString &pathToCodeFile, QString &pathToVaria
     // Проверка имен переменных
     checkingEnterVariables(namesOfVariables);
 }
+
 
 /**
     \brief Функция для чтения из файла
@@ -86,6 +93,7 @@ bool checkingEnterVariables(const QStringList variablesList){
         throw QString("Error: The variable file is empty");
         return false;
     }
+
     // Проверка на совпадение файла с ключевыми словами
 
     // Список ключевых слов в Си
@@ -128,7 +136,6 @@ QStringList createListWithAnswers(QStringList sourceCode, QStringList namesOfVar
     }
 
     // Создание списка всех переменных объявленных в коде программы на языке Си
-    // Создание списка всех переменных объявленных в коде программы на языке Си
     QStringList progVariablesList;
     createVariblesList(allCode, progVariablesList);
 
@@ -138,6 +145,8 @@ QStringList createListWithAnswers(QStringList sourceCode, QStringList namesOfVar
 
     return answerList;
 }
+
+
 
 /**
     \brief Удаление всех комментариев и строковых констант из кода программы на языке Си
@@ -232,6 +241,7 @@ void deleteAllCommentsAndStringConstnts(QStringList &sourceCode){
 }
 
 
+
 /**
     \brief Создание списка имен всех перменных объявленных в тексте программы на языка Си
     \param[in] sourceCode - код программы на языке Си
@@ -294,8 +304,6 @@ void createVariblesList(QString sourceCode, QStringList &creatingList){
     creatingList.removeDuplicates();
 }
 
-
-
 /**
     \brief Создание списка всех пользовательских типов переменных
     \param[in] sourceCode - текст программы на языке Си
@@ -320,7 +328,6 @@ void createTypesList(QString sourceCode, QStringList &creatingList){
         lastFind = myReg.indexIn(sourceCode, lastFind);
     }
 }
-
 
 /**
     \brief Функция для записи результата функции в список variablesList
@@ -358,8 +365,6 @@ void writeResultsInFile(QStringList &list){
     // Запись результата в файл
     writeFile(resultPath, list);
 }
-
-
 
 /**
     \brief Функция записи списка в файл

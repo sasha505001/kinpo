@@ -2,52 +2,52 @@
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication a(argc, argv);
     try {
-    // Часть необходимая для ввода
-    QTextStream cin(stdin);
 
-    // Путь к файлу с кодом
-    QString pathToCodeFile;
+        // Часть необходимая для ввода
+        QTextStream cin(stdin);
 
-    // Путь к файлу с переменными
-    QString pathToVariablesFile;
+        // Путь к файлу с кодом
+        QString pathToCodeFile;
 
-    // передача параметров через командную строку
-    // Если параметры были переданы через командную строку
-    if(argc == 3){
-        // передача через параметры командной строки
-        // путь к файлу с кодом
-        pathToCodeFile = argv[1];
-        // путь к файлу с именами переменных
-        pathToVariablesFile = argv[2];
-    }
-    else{
-        // запрос на ввод пути к файлу с кодом
-        printf("Enter the path to the code file:\n");
-        cin >> pathToCodeFile;
-        // запрос на ввод пути к файлу с переменными
-        printf("Enter the path to the variable file:\n");
-        cin >> pathToVariablesFile;
-    }
+        // Путь к файлу с переменными
+        QString pathToVariablesFile;
 
-    // Текст программы
-    QStringList textOfProgramm;
+        // Если параметры были переданы через командную строку
+        if(argc == 3){
+            // передача через параметры командной строки
+            // путь к файлу с кодом
+            pathToCodeFile = argv[1];
+            // путь к файлу с именами переменных
+            pathToVariablesFile = argv[2];
+        }
+        else{
+            // запрос на ввод пути к файлу с кодом
+            printf("Enter the path to the code file:\n");
+            cin >> pathToCodeFile;
+            // запрос на ввод пути к файлу с переменными
+            printf("Enter the path to the variable file:\n");
+            cin >> pathToVariablesFile;
+        }
 
-    // Список переменных
-    QStringList namesOfVariables;
+        // Текст программы
+        QStringList textOfProgramm;
 
-    // чтение файлов и их проверка
-    getAndCheckImputDataFromFiles(pathToCodeFile, pathToVariablesFile, textOfProgramm, namesOfVariables);
+        // Список переменных
+        QStringList namesOfVariables;
 
-    // Решение задачи(создание списка с ответами объявлена ли переменная в программе на языке Си)
-    QStringList answerList = createListWithAnswers(textOfProgramm, namesOfVariables);
+        // Чтение данных из файлов и их проверка
+        getAndCheckImputDataFromFiles(pathToCodeFile, pathToVariablesFile, textOfProgramm, namesOfVariables);
 
-    // Запись результатов в файл
-    writeResultsInFile(answerList);
-    printf("Solution was created. Answer is located in folder \"Results\".");
+        // Решение задачи(создание списка с ответами объявлена ли переменная в программе на языке Си)
+        QStringList answerList = createListWithAnswers(textOfProgramm, namesOfVariables);
+
+        // Запись результатов в файл
+        writeResultsInFile(answerList);
+        printf("Solution was created. Answer is located in folder \"Results\".");
 
     }  catch (const QString message) {
+
         QStringList answerList{message};
 
         // Запись ошибки в файл
@@ -55,6 +55,5 @@ int main(int argc, char *argv[])
 
         printf("ERROR! Error message is located in folder \"Results\".");
     }
-    return a.exec();
 }
 
